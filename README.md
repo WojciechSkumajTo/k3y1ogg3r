@@ -26,7 +26,7 @@ Every minute, the program sends logs to the attacker's email address and automat
 - Windows operating system
 
 ## Installation and Usage
-- Clone this repository
+- Clone this repository in the terminal (or command prompt)
 ```shell
    git clone https://github.com/WojciechSkumajTo/k3y1ogg3r.git 
 ```
@@ -34,3 +34,5 @@ Every minute, the program sends logs to the attacker's email address and automat
 ```shell
   sudo python3 systems.py
 ```
+OR
+- installing the *.exe program as administrator
