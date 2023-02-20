@@ -1,10 +1,10 @@
 # k3y1ogg3r
 
-## Intro
+## Intro:
 
 The goal of the project was to create and use an _Advanced Persistent Threat_ (APT) tool that will be permanently embedded in a specific computer system. The tool aims to covertly track the activities of operators, gain access to selected information resources, and covertly derive this information with the security of the location and identity of the recipient.
 
-## Description 
+## Description: 
 
 The program, written in Python 3, records the keys pressed by the victim and collects information about the system, such as: 
 - Operating system
@@ -24,7 +24,7 @@ Every minute, the program sends logs to the attacker's email address and automat
 - Python 3.x
 - Windows operating system
 
-## Installation and Usage
+## Installation and Usage:
 - Clone this repository in the terminal (or command prompt)
 ```shell
    git clone https://github.com/WojciechSkumajTo/k3y1ogg3r.git 
