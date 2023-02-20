@@ -28,9 +28,9 @@ Every minute, the program sends logs to the attacker's email address and automat
 ## Installation and Usage
 - Clone this repository
 ```shell
-  pip3 install --pre scapy[basic] 
+   git clone https://github.com/WojciechSkumajTo/k3y1ogg3r.git 
 ```
 - Run the Python 3 code in the terminal (or command prompt):
 ```shell
-  sudo python3 arpSpoof.py <IP_VICTIM> <ROUTER_IP>
+  sudo python3 systems.py
 ```
